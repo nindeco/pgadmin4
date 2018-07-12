@@ -1,0 +1,16 @@
+version: '3.4'
+volumes:
+  pgadmin_data:
+services: 
+  pgadmin:
+    container_name: ${COMPOSE_PROJECT_NAME}_pgadmin
+    build: ./pgadmin
+    volumes: 
+      - pgadmin_data:/var/lib/pgadmin/
+      - ${PGADMIN_DATA_PATH}:/var/lib/pgadmin/storage/${PGADMIN_DEFAULT_EMAIL}
+    environment: 
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+    # Указываем сеть хоста, чтобы получать доступ к сторонним контейнерам
+    network_mode: "host"
+    restart: always
